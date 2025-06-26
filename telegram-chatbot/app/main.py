@@ -1,23 +1,39 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 import requests
+import asyncio
 
-TELEGRAM_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_TOKEN = "7796236199:AAEbKkM8UMP81JKgbXIXAIF4xgLxQ9QvDN8"
 RAG_SERVICE_URL = "http://rag-service:8082/query"
+WAIT_SECONDS = 7
+
+
+async def send_wait_message(chat_id, context):
+    await asyncio.sleep(WAIT_SECONDS)
+    await context.bot.send_message(chat_id=chat_id, text="Bancame, ya te respondo")
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
     chat_id = update.message.chat_id
 
-    await update.message.reply_text("Estoy procesando tu consulta, dame unos segundos...")
+    wait_task = asyncio.create_task(send_wait_message(chat_id, context))
 
     try:
-        response = requests.post(RAG_SERVICE_URL, json={"message": user_message}, timeout=30)
+        loop = asyncio.get_event_loop()
+        # Ejecutamos la request en un thread externo para no bloquear
+        response = await loop.run_in_executor(
+            None,
+            lambda: requests.post(RAG_SERVICE_URL, json={"message": user_message}, timeout=30)
+        )
+
+        wait_task.cancel()  # Si responde a tiempo, cancelamos el mensaje de espera
+
         data = response.json()
         final_answer = data.get("response", "Lo siento, no tengo respuesta.")
         await context.bot.send_message(chat_id=chat_id, text=final_answer)
-    except Exception as e:
+    except Exception:
+        wait_task.cancel()
         await context.bot.send_message(chat_id=chat_id, text="Ocurrió un error procesando tu consulta.")
 
 

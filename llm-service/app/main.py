@@ -1,26 +1,19 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import openai
-import os
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
+from google_gemini.llm import GeminiLLM
 
 app = FastAPI()
+gemini_llm = GeminiLLM()
 
 
 class CompletionRequest(BaseModel):
     user_input: str
+    base_profile: str
     context: str
 
 
 @app.post("/complete")
 async def complete(req: CompletionRequest):
-    prompt = f"Context: {req.context}\nUser: {req.user_input}\nAnswer:"
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant. Only answer questions relevant to the user's experience."},
-            {"role": "user", "content": prompt}
-        ]
-    )
-    return {"response": completion.choices[0].message["content"]}
+    generated_content = gemini_llm.generate_content(user_input=req.user_input, document=req.context,
+                                                    base_profile=req.base_profile)
+    return {"response": generated_content}

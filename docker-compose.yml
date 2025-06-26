@@ -3,19 +3,33 @@ version: '3.9'
 services:
   telegram-chatbot:
     build: ./telegram-chatbot
+    volumes:
+      - ./telegram-chatbot/app:/app
     ports:
       - "8081:8081"
     depends_on:
       - rag-service
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: on-failure
 
   rag-service:
     build: ./rag-service
+    volumes:
+      - ./rag-service/app:/app
+      - ./rag-service/data_ingestion:/app/data_ingestion
     ports:
       - "8082:8082"
     depends_on:
       - llm-service
+    environment:
+      - PYTHONUNBUFFERED=1
 
   llm-service:
     build: ./llm-service
+    volumes:
+      - ./llm-service/app:/app
     ports:
       - "8083:8083"
+    environment:
+      - PYTHONUNBUFFERED=1

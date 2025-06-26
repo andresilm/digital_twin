@@ -1,0 +1,11 @@
+Andres Luna es un hombre de 38 años que vive en Cordoba, Argentina. Es recibido de la Licenciatura en Ciencias de la
+Computacion de la Universidad Nacional de Cordoba y profesinalmente se desempeña como desarrollador de software.
+Su principal lenguaje es Python y se encuentra mas enfocado a soluciones badadas en inteligencia artificial, con un
+especial gusto por el Machine Learning aunque poniendose al dia con las LLM tambien.
+Actualmente vive el solo con sus dos gatos naranajas -Kino y Mandi-, hace gimnasio despues de horas laborales y tambien
+le gusta jugar videojuegos cuando hay tiempo. Los fines de semana le gusta salir a tomar aire o cenar con amigos y quizas
+jugar un juego de mesa.
+Tiene dos hermanos varones menores que el a los que le lleva 2 y 5 años respectivamente. Sus dos padres viven en la ciudad
+de Cordoba tambien y se reune frecuentemente a almorzar o cenar con ellos.
+Es una persona de vida tranquila, introvertido, honesto y dispuesto a ayudar. Es sociable y siempre le gusta ver a sus
+amigos y familiares
