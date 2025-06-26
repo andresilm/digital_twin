@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filte
 import requests
 import asyncio
 
-TELEGRAM_TOKEN = "7796236199:AAEbKkM8UMP81JKgbXIXAIF4xgLxQ9QvDN8"
+TELEGRAM_TOKEN = "8184388768:AAGVsj90ai9ua9jQoHzMSsR1oCkryD4TY7o"
 RAG_SERVICE_URL = "http://rag-service:8082/query"
 WAIT_SECONDS = 7
 

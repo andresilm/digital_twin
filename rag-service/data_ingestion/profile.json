@@ -25,7 +25,9 @@
       "FastAPI",
       "Pandas",
       "NumPy",
-      "LLM"
+      "LLM",
+      "Redes neuronales convolucionales",
+      "Computer vision"
    ],
    "proyectos_clave":[
       {
