@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  telegram-chatbot:
+    build: ./telegram-chatbot
+    ports:
+      - "8081:8081"
+    depends_on:
+      - rag-service
+
+  rag-service:
+    build: ./rag-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - llm-service
+
+  llm-service:
+    build: ./llm-service
+    ports:
+      - "8083:8083"
