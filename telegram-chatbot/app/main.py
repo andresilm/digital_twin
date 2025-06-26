@@ -1,46 +1,27 @@
+from telegram import Update
+from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 import requests
-import time
-import threading
 
 TELEGRAM_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
-GET_UPDATES_URL = f"{TELEGRAM_API_URL}/getUpdates"
-SEND_MESSAGE_URL = f"{TELEGRAM_API_URL}/sendMessage"
 RAG_SERVICE_URL = "http://rag-service:8082/query"
 
 
-def send_message(chat_id, text):
-    requests.post(SEND_MESSAGE_URL, json={"chat_id": chat_id, "text": text})
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_message = update.message.text
+    chat_id = update.message.chat_id
 
+    await update.message.reply_text("Estoy procesando tu consulta, dame unos segundos...")
 
-def process_message(chat_id, message):
     try:
-        response = requests.post(RAG_SERVICE_URL, json={"message": message}, timeout=30)
+        response = requests.post(RAG_SERVICE_URL, json={"message": user_message}, timeout=30)
         data = response.json()
         final_answer = data.get("response", "Lo siento, no tengo respuesta.")
-        send_message(chat_id, final_answer)
+        await context.bot.send_message(chat_id=chat_id, text=final_answer)
     except Exception as e:
-        send_message(chat_id, "Ocurrió un error procesando tu consulta.")
-
-
-def poll_telegram():
-    last_update_id = None
-    while True:
-        response = requests.get(GET_UPDATES_URL, timeout=10)
-        data = response.json()
-        for update in data.get("result", []):
-            update_id = update["update_id"]
-            message = update.get("message", {}).get("text")
-            chat_id = update.get("message", {}).get("chat", {}).get("id")
-
-            if update_id != last_update_id and message:
-                last_update_id = update_id
-                # Response immediately
-                send_message(chat_id, "Estoy procesando tu consulta, dame unos segundos...")
-                # Process in background
-                threading.Thread(target=process_message, args=(chat_id, message)).start()
-        time.sleep(2)
+        await context.bot.send_message(chat_id=chat_id, text="Ocurrió un error procesando tu consulta.")
 
 
 if __name__ == "__main__":
-    poll_telegram()
+    app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.run_polling()

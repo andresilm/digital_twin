@@ -7,9 +7,11 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
+
 class CompletionRequest(BaseModel):
     user_input: str
     context: str
+
 
 @app.post("/complete")
 async def complete(req: CompletionRequest):
