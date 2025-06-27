@@ -1,8 +1,14 @@
 from fastapi import FastAPI
 from google_gemini.llm import GeminiLLM
 from models import CompletionRequest
+import logging
 
 app = FastAPI()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
 
 
 @app.on_event("startup")

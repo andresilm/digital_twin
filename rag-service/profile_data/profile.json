@@ -109,10 +109,10 @@
       "Computer Vision"
     ]
   },
-  "proyectos_destacados": [
+  "proyectos": [
     {
       "nombre": "Sistema de segmentación de imágenes médicas",
-      "descripcion": "Modelo UNet entrenado con datos propios para segmentar imágenes médicas, optimizado para CPU y GPU.",
+      "descripcion": "Modelo UNet entrenado con datos propios para segmentar imágenes médicas",
       "tecnologias": [
         "Keras",
         "Python",

@@ -5,6 +5,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+CHUNKS_SIZE = 200
+CHUNKS_OVERLAP = CHUNKS_SIZE * 0.1
+
 
 def split_to_chunks(full_profile):
     """
@@ -25,7 +28,7 @@ def split_to_chunks(full_profile):
     docs = [
         Document(page_content=full_profile, metadata={"source": "profile_json"}),
     ]
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNKS_SIZE, chunk_overlap=CHUNKS_OVERLAP)
     docs_split = text_splitter.split_documents(docs)
     return docs_split
 
@@ -41,7 +44,7 @@ def load_embeddings():
         - Logs info messages when loading starts and finishes.
         - Uses the "BAAI/bge-small-en-v1.5" model for embeddings.
     """
-    logger.info('Loading Embedding')
+    logger.debug('Loading Embedding')
     embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
-    logger.info('Done')
+    logger.debug('Done')
     return embeddings
