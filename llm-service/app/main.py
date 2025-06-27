@@ -33,11 +33,6 @@ async def complete(req: CompletionRequest):
 
     Returns:
         dict: A dictionary with the key 'response' containing the generated text.
-
-    Behavior:
-        - Retrieves the GeminiLLM instance from the app state.
-        - Calls the generate_content method passing user input, context, and base profile.
-        - Returns the generated response as JSON.
     """
     gemini_llm = app.state.gemini_llm
     generated_content = gemini_llm.generate_content(

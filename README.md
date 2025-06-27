@@ -78,10 +78,7 @@ This project contains three Docker services:
   - `rag-service`: 8082  
   - `llm-service`: 8083  
 - `telegram-chatbot` depends on `rag-service`, which depends on `llm-service`.  
-- The environment variable `PYTHONUNBUFFERED=1` is used to improve real-time logging.  
 
 ---
 
-## Contact
 
-If you have any questions, feel free to contact me or open an issue.
