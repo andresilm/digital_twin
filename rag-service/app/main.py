@@ -53,7 +53,7 @@ async def startup_event():
         Document(page_content=profile_text, metadata={"source": "profile_json"}),
     ]
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
     docs_split = text_splitter.split_documents(docs)
     print('Loading Embedding')
     embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")

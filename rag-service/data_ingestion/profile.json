@@ -1,133 +1,143 @@
 {
-   "nombre":"Andrés Luna",
-   "edad":"38",
-   "formacion":{
-      "titulo":"Licenciado en Ciencias de la Computación",
-      "certificaciones":[
-         "Diplomatura en Ciencia de Datos y Aprendizaje Automático"
-      ],
-      "otros_estudios":[
-
-      ]
-   },
-   "experiencia_laboral":[
+  "informacion_personal": {
+    "nombre_completo": "Andrés Luna",
+    "edad": 38,
+    "ubicacion": {
+      "ciudad": "Córdoba",
+      "pais": "Argentina"
+    },
+    "idiomas": [
       {
-         "puesto":"Python & AI/ML developer",
-         "empresa":"Intive",
-         "periodo":"2019 - 2025",
-         "descripcion":"Diseño y desarrollo de sistemas backend y modelos de machine learning para producción."
+        "idioma": "Español",
+        "nivel": "Nativo"
+      },
+      {
+        "idioma": "Inglés",
+        "nivel": "Intermedio avanzado. Ha trabajado en equipos internacionales hablando en inglés cada día."
       }
-   ],
-   "stack_tecnologico":[
+    ],
+    "estilo_personal": {
+      "descripcion": "Pragmático, directo y orientado a resultados",
+      "valores": [
+        "Trabajo en equipo",
+        "Pensamiento crítico",
+        "Comunicación efectiva",
+        "Honestidad",
+        "Solidaridad"
+      ],
+      "rasgos": [
+        "Introvertido",
+        "Sociable con amigos y familiares",
+         "Honesto",
+         "Solidario",
+         "Responsable"
+      ]
+    },
+    "vida_personal": {
+      "hobbies": [
+        "Astrofísica y astronomía",
+        "Videojuegos",
+        "Fotografía semi-profesional",
+        "Fútbol (hincha de Belgrano)",
+        "Natación (actualmente no disponible)"
+      ],
+      "actividades": ["Va al gimnasio por salud de la espalda"],
+      "fines_de_semana": [
+        "Cenar con amigos y jugar juegos de mesa",
+        "Ir a eventos tecnológicos",
+        "Salir a caminar",
+        "Tomar mates en la plaza"
+      ],
+      "viajes": [
+        "Disfruta de las vacaciones en la playa y el mar, donde puede relajarse y desconectarse.",
+        "También le gusta recorrer lugares turísticos importantes de vez en cuando, como hizo en 2015.",
+        "Viajó a Francia en 2015 y desde allí recorrió París, Barcelona, Londres y Edimburgo.",
+        "También ha recorrido varios lugares de Argentina.",
+        "Aún no conoce Italia y le gustaría visitarla en el futuro."
+      ],
+      "convivientes": [
+        "Vive solo.",
+        "Dos gatos naranjas: Kino y Mandi"
+      ],
+      "familiares": {
+        "padres": ["Laura", "Carlos"],
+        "hermanos": ["Nicolás (2 años menor)", "Javier (5 años menor)"]
+      },
+      "relacion_con_familia": "Se reúne frecuentemente a almorzar o cenar con sus padres."
+    },
+    "intereses": [
+      "Machine Learning",
+      "Inteligencia Artificial",
+      "Modelos de lenguaje (LLMs)",
+      "Investigación"
+    ],
+    "contacto": {
+      "linkedin": "https://www.linkedin.com/in/andres-luna-cbaarg/",
+      "github": "https://github.com/andresilm"
+    }
+  },
+  "formacion": {
+    "titulo_universitario": {
+      "nombre": "Licenciado en Ciencias de la Computación",
+      "universidad": "Universidad Nacional de Córdoba",
+      "facultad": "FaMAF",
+      "fecha_egreso": "Agosto 2013"
+    },
+    "certificaciones": [
+      "Diplomatura en Ciencia de Datos y Aprendizaje Automático"
+    ],
+    "otros_estudios": []
+  },
+  "experiencia_laboral": [
+    {
+      "puesto": "Python & AI/ML developer",
+      "empresa": "Intive",
+      "periodo": "2019 - 2025",
+      "descripcion": "Diseño y desarrollo de sistemas backend y modelos de machine learning para producción."
+    }
+  ],
+  "rol_general": "Desarrollador de software con enfoque en inteligencia artificial",
+  "habilidades": {
+    "stack_tecnologico": [
       "Python",
       "Keras",
-      "Numpy",
-      "FastAPI",
-      "Pandas",
       "NumPy",
-      "LLM",
-      "Redes neuronales convolucionales",
-      "Computer vision"
-   ],
-   "proyectos_clave":[
-      {
-         "nombre":"Sistema de segmentación de imágenes médicas",
-         "descripcion":"Modelo UNet entrenado con datos propios para segmentar imágenes, optimizado para CPU y GPU.",
-         "tecnologias":[
-            "Keras",
-            "Python",
-            "OpenCV",
-            "Scikit-learn",
-            "Jupyter",
-            "Matplotlib",
-            "Vtk",
-            "DICOM",
-            "3DSlicer"
-         ]
-      },
-      {
-         "nombre":"Text Mining usando LLM",
-         "descripcion":"Implementación de sistema RAG usando LangChain, FAISS y OpenAI para preguntas personalizadas.",
-         "tecnologias":[
-            "Python",
-            "Google Gemini",
-            "Prompt Engineering",
-            "Docker",
-            "FastAPI",
-            "AWS S3",
-            "AWS EC2",
-            "AWS EKS"
-         ]
-      }
-   ],
-   "habilidades":[
-      "Desarrollo backend",
-      "Machine Learning",
-      "Diseño de arquitecturas RAG",
-      "Prototipado rápido",
-      "Documentación clara",
-      "Codigo limpio"
-   ],
-   "estilo_personal":{
-      "descripcion":"Pragmático, directo y orientado a resultados. Prefiere soluciones simples y mantenibles",
-      "valores":[
-         "Trabajo en equipo",
-         "Pensamiento crítico",
-         "Comunicacion efectiva"
+      "Pandas",
+      "FastAPI",
+      "LLMs",
+      "Redes neuronales convolucionales (CNN)",
+      "Computer Vision"
+    ]
+  },
+  "proyectos_destacados": [
+    {
+      "nombre": "Sistema de segmentación de imágenes médicas",
+      "descripcion": "Modelo UNet entrenado con datos propios para segmentar imágenes médicas, optimizado para CPU y GPU.",
+      "tecnologias": [
+        "Keras",
+        "Python",
+        "OpenCV",
+        "Scikit-learn",
+        "Jupyter",
+        "Matplotlib",
+        "VTK",
+        "DICOM",
+        "3DSlicer"
       ]
-   },
-   "intereses_personales":[
-      "Machine Learning",
-      "Inteligencia Artificial en general",
-      "Ultimamente enfocado en LLM",
-      "Investigacion"
-   ],
-   "idiomas":[
-      {
-         "idioma":"Español",
-         "nivel":"Nativo"
-      },
-      {
-         "idioma":"Inglés",
-         "nivel":"Intermedio avanzado. Ha trabajado en equipos internacionales hablando en ingles cada dia y no le resulta un problema en absoluto"
-      }
-   ],
-   "hobbies_intereses":[
-      "Ve videos sobre astrofisica y astronomia en general",
-      "Juega Videojuegos y se mantiene actualizado sobre este mundo",
-      "Le gusta la natacion pero por el momento no puede realizar esta actividad",
-      "Es hincha del Club Atletico Belgrano y le gusta ver y seguir futbol en general",
-      "Le gusta la fotografia. Hizo varios cursos hace unos años y tiene una camara semi-profesional",
-      "Tiene mucho interes en las LLM al punto que adquirio una placa nvidia y una base para usarla coom eGPU"
-   ],
-   "actividades_no_laborales":[
-      "Va al gimnasio, por la salud de su espalda"
-   ],
-   "ubicacion":{
-      "ciudad":"Cordoba",
-      "pais":"Argentina"
-   },
-   "convivientes":[
-      "Dos gatos naranjas: Kino y Mandi."
-   ],
-   "familiares":{
-      "padres":[
-         "Laura",
-         "Carlos"
-      ],
-      "hermanos":[
-         "Nicolas",
-         "Javier"
+    },
+    {
+      "nombre": "Text Mining usando LLM",
+      "descripcion": "Implementación de sistema RAG usando LangChain, FAISS y OpenAI para preguntas personalizadas.",
+      "tecnologias": [
+        "Python",
+        "Google Gemini",
+        "Prompt Engineering",
+        "Docker",
+        "FastAPI",
+        "AWS S3",
+        "AWS EC2",
+        "AWS EKS"
       ]
-   },
-   "salidas_fin_de_semana":[
-      "Salir a cenar con amigos y jugar juegos de mesa",
-      "Ir a eventos tecnológicos",
-      "Salir caminar",
-      "Ir a tomar mates a la plaza"
-   ],
-   "contacto":{
-      "github":"https://www.linkedin.com/in/andres-luna-cbaarg/",
-      "linkedin":"https://github.com/andresilm"
-   }
+    }
+  ]
 }
