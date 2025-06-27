@@ -12,7 +12,10 @@ This project contains three Docker services:
 
 - Docker and Docker Compose installed  
 - Bash shell to run the `manage.sh` script  
-
+- A chatbot created in Telegram and its token loaded in environment variable "TELEGRAM_TOKEN" 
+  or put in telegram-chatbot/app/main.py file
+- A key for Google Gemini, loaded in environment variable "MY_GOOGLE_API_KEY" or 
+  put in llm-service/app/google_gemini/llm.py file
 ---
 
 ## Project structure
