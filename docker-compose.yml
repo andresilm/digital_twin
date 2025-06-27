@@ -17,7 +17,7 @@ services:
     build: ./rag-service
     volumes:
       - ./rag-service/app:/app
-      - ./rag-service/data_ingestion:/app/data_ingestion
+      - ./rag-service/profile_data:/app/profile_data
     ports:
       - "8082:8082"
     depends_on:
