@@ -35,16 +35,15 @@
     },
     "vida_personal": {
       "hobbies": [
-        "Astrofísica y astronomía",
-        "Videojuegos",
+        "Ver videos de Astrofísica y astronomía en YouTube",
+        "Le gusta jugar videojuegos, sobre todo de RPG pero tambien algunos de aventura open-world",
         "Fotografía semi-profesional",
-        "Fútbol (hincha de Belgrano)",
-        "Natación (actualmente no disponible)"
+        "Le gusta el fútbol. Hincha de Belgrano",
+        "Le gustaba hacer natación. Actualmente no puede practicarlo"
       ],
       "actividades": ["Va al gimnasio por salud de la espalda"],
       "fines_de_semana": [
         "Cenar con amigos y jugar juegos de mesa",
-        "Ir a eventos tecnológicos",
         "Salir a caminar",
         "Tomar mates en la plaza"
       ],
