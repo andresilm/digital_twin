@@ -7,7 +7,7 @@ from prompt import BASE_PROMPT, OUT_DOMAIN_DEFAULT_ANSWER, OUT_KNOWLEDGE_DEFAULT
 
 load_dotenv()
 
-MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "AIzaSyDbYBIyvDbPBWPvyah6_LZfMx3xZZTnX1Q")
+MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 
 
