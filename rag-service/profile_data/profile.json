@@ -92,7 +92,7 @@
     {
       "puesto": "Python & AI/ML developer",
       "empresa": "Intive",
-      "periodo": "2019 - 2025",
+      "periodo": "noviembre 2019 - abril 2025",
       "descripcion": "Diseño y desarrollo de sistemas backend y modelos de machine learning para producción."
     }
   ],
@@ -127,7 +127,7 @@
     },
     {
       "nombre": "Text Mining usando LLM",
-      "descripcion": "Implementación de sistema RAG usando LangChain, FAISS y OpenAI para preguntas personalizadas.",
+      "descripcion": "Implementación de sistema para minar texto de documentos con requerimientos, provenientes de clientes.",
       "tecnologias": [
         "Python",
         "Google Gemini",
