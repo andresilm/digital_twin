@@ -7,7 +7,7 @@ from vector_db import create_index
 from models import UserInput
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ async def query_rag(input: UserInput):
     base_profile = app.state.base_profile
 
     docs = vectordb.similarity_search(input.message, k=1)
-    logger.debug("Chose this entry in profile.json as the most relevant: %s", str(docs))
+    logger.debug("Selected chunk with size %d: %s", len(docs[0].page_content), str(docs[0].page_content))
     context = docs[0].page_content if docs else ""
     response = requests.post("http://llm-service:8083/complete", json={
         "user_input": input.message,

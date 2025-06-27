@@ -5,11 +5,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-CHUNKS_SIZE = 200
-CHUNKS_OVERLAP = CHUNKS_SIZE * 0.1
+CHUNKS_SIZE = 500
+CHUNKS_OVERLAP = int(CHUNKS_SIZE * 0.1)
 
 
-def split_to_chunks(full_profile):
+def split_to_chunks(full_profile: str):
     """
     Splits a large text profile into smaller chunks for embedding or retrieval.
 

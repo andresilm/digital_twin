@@ -36,54 +36,68 @@ def load_profile_from_json():
     """
     with open("profile_data/profile.json", "r", encoding="utf-8") as f:
         profile_json = json.load(f)
-    profile_text = __json_to_text(profile_json)
+    profile_text = json_to_flat_text(profile_json)
     return profile_text
 
 
-def __json_to_text(data, indent=0):
+def json_to_flat_text(data, prefix_path=None):
     """
-    Recursively converts JSON-like data (dicts, lists, primitives) into a formatted
-    indented text representation.
+    Recursively flattens a nested JSON-like structure into a plain text string.
+    Each line contains the full path from the root to an object, with grouped leaves for lists of primitives or dicts.
 
     Args:
-        data (dict, list, or primitive): The input JSON-like data to convert.
-        indent (int): Current indentation level (number of indent steps).
+        data (dict, list, or primitive): The JSON-like structure to flatten.
+        prefix_path (list): Accumulator for the current path of keys.
 
     Returns:
-        str: The formatted multiline string representing the JSON structure.
-
-    Behavior:
-        - Dictionaries are printed as:
-            key:
-              nested_key:
-                ...
-        - Lists are printed with a dash prefix:
-            - item1
-            - item2
-              nested_key:
-                ...
-        - Primitive values (str, int, etc.) are printed directly with indentation.
-
-    Efficiency:
-        Uses list appends and ''.join() to efficiently concatenate strings
-        rather than repeated += operations.
+        str: A multiline string where each line represents a grouped object or list.
     """
+    if prefix_path is None:
+        prefix_path = []
+
     lines = []
-    prefix = "  " * indent
 
+    # Handle dictionary objects by iterating key-value pairs
     if isinstance(data, dict):
+        current_line = []
         for key, value in data.items():
-            lines.append(f"{prefix}{key}:\n")
-            lines.append(__json_to_text(value, indent + 1))
-    elif isinstance(data, list):
-        for item in data:
-            if isinstance(item, (dict, list)):
-                lines.append(f"{prefix}- \n")
-                lines.append(__json_to_text(item, indent + 1))
+            # If the value is nested (dict or list), recursively flatten it
+            if isinstance(value, (dict, list)):
+                lines.append(json_to_flat_text(value, prefix_path + [key]))
             else:
-                lines.append(f"{prefix}- {item}\n")
-    else:
-        lines.append(f"{prefix}{data}\n")
+                # Collect simple key-value pairs to form a grouped line
+                current_line.append(f"{key}: {value}")
+        # If there are simple key-value pairs, join them in one line with the current path as prefix
+        if current_line:
+            full_path = " > ".join(prefix_path)
+            lines.append(f"{full_path} | " + " | ".join(current_line))
 
-    return ''.join(lines)
+    # Handle list objects
+    elif isinstance(data, list):
+        # If the list consists entirely of dictionaries, flatten each dict separately
+        if all(isinstance(item, dict) for item in data):
+            for item in data:
+                lines.append(json_to_flat_text(item, prefix_path))
+        # If the list contains only primitive types, join them in one line
+        elif all(isinstance(item, (str, int, float)) for item in data):
+            full_path = " > ".join(prefix_path)
+            joined = ", ".join(str(x) for x in data)
+            lines.append(f"{full_path} > {joined}")
+        else:
+            # For mixed or complex lists, recursively process each item individually
+            for item in data:
+                lines.append(json_to_flat_text(item, prefix_path))
+
+    # Base case: the data is a primitive value (str, int, float, etc.)
+    else:
+        full_path = " > ".join(prefix_path)
+        lines.append(f"{full_path} > {data}")
+
+    # Join all lines into a single string separated by newlines, filtering out any empty lines
+    result = "\n".join([line for line in lines if line.strip()])
+    logger.debug(result)
+    return result
+
+
+
 

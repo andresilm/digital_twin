@@ -1,14 +1,24 @@
+import logging
 import os
 
 import google.generativeai as genai
 from dotenv import load_dotenv
-
 from prompt import BASE_PROMPT, OUT_DOMAIN_DEFAULT_ANSWER, OUT_KNOWLEDGE_DEFAULT_ANSWER
 
 load_dotenv()
 
-MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+logger = logging.getLogger(__name__)
+
+MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "AIzaSyDbYBIyvDbPBWPvyah6_LZfMx3xZZTnX1Q")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
+CONVERSATION_HISTORY_LENGTH = 3
+
+# this configuration is aimed to avoid robotic and repeated answers while trying to not make up anything
+GENERATION_CONFIG = {
+        "temperature": 0.1,
+        "top_p": 0.8,
+        "top_k": 40
+    }
 
 
 class GeminiLLM:
@@ -29,6 +39,16 @@ class GeminiLLM:
         """
         genai.configure(api_key=google_api_key)
         self._model = genai.GenerativeModel(model_name)
+        self._history = ["" for _ in range(CONVERSATION_HISTORY_LENGTH)]
+        self._history_ptr = 0
+
+    def __update_history(self, new_input: str):
+        self._history[self._history_ptr] = new_input
+        self._history_ptr = (self._history_ptr + 1) % CONVERSATION_HISTORY_LENGTH
+
+    @property
+    def history(self):
+        return "\n".join([entry for entry in self._history])
 
     def generate_content(self, user_input, document, base_profile: str):
         """
@@ -47,7 +67,9 @@ class GeminiLLM:
             document,
             base_profile
         )
-        response = self._model.generate_content(prompt)
+        logger.debug("Using conversation history:\n%s", self._history)
+        response = self._model.generate_content(prompt, generation_config=GENERATION_CONFIG)
+        self.__update_history(user_input)
         return response.candidates[0].content.parts[0].text
 
     def _build_prompt(
@@ -55,7 +77,6 @@ class GeminiLLM:
         user_input,
         context,
         base_profile,
-        history=None,
         out_of_domain_answer=OUT_DOMAIN_DEFAULT_ANSWER,
         out_of_knowledge_answer=OUT_KNOWLEDGE_DEFAULT_ANSWER
     ):
@@ -66,21 +87,20 @@ class GeminiLLM:
             user_input (str): The current user query.
             context (str): Specific context related to the query.
             base_profile (str): The base profile text.
-            history (list or None): Optional list of previous conversation entries.
             out_of_domain_answer (str): Default reply if question is out of domain.
             out_of_knowledge_answer (str): Default reply if question can't be answered.
 
         Returns:
             str: The formatted prompt ready for the model.
         """
-        if isinstance(history, list):
-            history = "".join(entry for entry in history)
 
-        return BASE_PROMPT.format(
+        prompt_filled = BASE_PROMPT.format(
             base_profile=base_profile,
             context=context,
             user_input=user_input,
-            history=history or "",
+            history=self.history,
             out_of_domain_answer=out_of_domain_answer,
             out_of_knowledge_answer=out_of_knowledge_answer
         )
+        logger.debug("PROMPT:\n%s", prompt_filled)
+        return prompt_filled
