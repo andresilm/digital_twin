@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 CHUNKS_SIZE = 500
 CHUNKS_OVERLAP = int(CHUNKS_SIZE * 0.1)
-EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+EMBEDDING_MODEL = "BAAI/bge-m3"
 
 
 def split_to_chunks(full_profile: str):

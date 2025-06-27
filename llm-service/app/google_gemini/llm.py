@@ -9,7 +9,7 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "AIzaSyDbYBIyvDbPBWPvyah6_LZfMx3xZZTnX1Q")
+MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
 CONVERSATION_HISTORY_LENGTH = 3
 
