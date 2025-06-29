@@ -3,11 +3,11 @@ import requests
 from fastapi import FastAPI
 from data_load import load_profile_from_json, load_base_profile
 from embedding import load_embeddings, split_to_chunks
-from vector_db import create_index
+from vector_db import create_index, get_most_revelant_documents
 from models import UserInput
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
@@ -59,9 +59,10 @@ async def query_rag(input: UserInput):
     vectordb = app.state.vectordb
     base_profile = app.state.base_profile
 
-    docs = vectordb.similarity_search(input.message, k=1)
+    docs = get_most_revelant_documents(vectordb, input.message)
+
     logger.debug("Selected chunk with size %d: %s", len(docs[0].page_content), str(docs[0].page_content))
-    context = docs[0].page_content if docs else ""
+    context = "\n".join(doc.page_content for doc in docs) if docs else ""
     response = requests.post("http://llm-service:8083/complete", json={
         "user_input": input.message,
         "base_profile": base_profile,

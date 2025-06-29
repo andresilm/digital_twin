@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-CHUNKS_SIZE = 500
+CHUNKS_SIZE = 800
 CHUNKS_OVERLAP = int(CHUNKS_SIZE * 0.1)
 EMBEDDING_MODEL = "BAAI/bge-m3"
 
@@ -26,6 +26,7 @@ def split_to_chunks(full_profile: str):
     ]
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNKS_SIZE, chunk_overlap=CHUNKS_OVERLAP)
     docs_split = text_splitter.split_documents(docs)
+    logger.info('Split profile data into %d documents', len(docs_split))
     return docs_split
 
 

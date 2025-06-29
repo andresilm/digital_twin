@@ -9,16 +9,14 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "")
+MY_GOOGLE_API_KEY = os.getenv("MY_GOOGLE_API_KEY", "AIzaSyDbYBIyvDbPBWPvyah6_LZfMx3xZZTnX1Q")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash-lite")
 CONVERSATION_HISTORY_LENGTH = 3
 
-# this configuration is aimed to avoid robotic and repeated answers while trying to not make up anything
+
 GENERATION_CONFIG = {
-        "temperature": 0.1,
-        "top_p": 0.8,
-        "top_k": 40
-    }
+        "temperature": 0.00,
+}
 
 
 class GeminiLLM:
@@ -67,7 +65,7 @@ class GeminiLLM:
             document,
             base_profile
         )
-        logger.debug("Using conversation history:\n%s", self._history)
+        logger.debug("Conversation history:\n%s", self._history)
         response = self._model.generate_content(prompt, generation_config=GENERATION_CONFIG)
         self.__update_history(user_input)
         return response.candidates[0].content.parts[0].text

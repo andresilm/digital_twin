@@ -40,63 +40,37 @@ def load_profile_from_json():
     return profile_text
 
 
-def json_to_flat_text(data, prefix_path=None):
+def json_to_flat_text(data, indent_level=0) -> str:
     """
-    Recursively flattens a nested JSON-like structure into a plain text string.
-    Each line contains the full path from the root to an object, with grouped leaves for lists of primitives or dicts.
-
-    Args:
-        data (dict, list, or primitive): The JSON-like structure to flatten.
-        prefix_path (list): Accumulator for the current path of keys.
-
-    Returns:
-        str: A multiline string where each line represents a grouped object or list.
+    Convierte un JSON en texto plano, manteniendo el orden y estructura.
+    No intenta hacer prosa natural, pero conserva jerarquía.
     """
-    if prefix_path is None:
-        prefix_path = []
-
     lines = []
+    indent = "  " * indent_level  # dos espacios por nivel
 
-    # Handle dictionary objects by iterating key-value pairs
     if isinstance(data, dict):
-        current_line = []
         for key, value in data.items():
-            # If the value is nested (dict or list), recursively flatten it
-            if isinstance(value, (dict, list)):
-                lines.append(json_to_flat_text(value, prefix_path + [key]))
+            # Convertimos la clave en título de sección si estamos en nivel alto
+            if indent_level <= 1:
+                lines.append(f"{indent}{key.upper()}:")
             else:
-                # Collect simple key-value pairs to form a grouped line
-                current_line.append(f"{key}: {value}")
-        # If there are simple key-value pairs, join them in one line with the current path as prefix
-        if current_line:
-            full_path = " > ".join(prefix_path)
-            lines.append(f"{full_path} | " + " | ".join(current_line))
-
-    # Handle list objects
+                lines.append(f"{indent}{key}:")
+            lines.append(json_to_flat_text(value, indent_level + 1))
     elif isinstance(data, list):
-        # If the list consists entirely of dictionaries, flatten each dict separately
-        if all(isinstance(item, dict) for item in data):
-            for item in data:
-                lines.append(json_to_flat_text(item, prefix_path))
-        # If the list contains only primitive types, join them in one line
-        elif all(isinstance(item, (str, int, float)) for item in data):
-            full_path = " > ".join(prefix_path)
-            joined = ", ".join(str(x) for x in data)
-            lines.append(f"{full_path} > {joined}")
-        else:
-            # For mixed or complex lists, recursively process each item individually
-            for item in data:
-                lines.append(json_to_flat_text(item, prefix_path))
-
-    # Base case: the data is a primitive value (str, int, float, etc.)
+        for item in data:
+            # Prefijo tipo bullet solo para listas de strings o dicts simples
+            prefix = "- " if isinstance(item, (str, dict)) else ""
+            nested = json_to_flat_text(item, indent_level + 1)
+            if isinstance(item, str):
+                lines.append(f"{indent}{prefix}{item}")
+            else:
+                lines.append(f"{indent}{prefix}{nested}")
     else:
-        full_path = " > ".join(prefix_path)
-        lines.append(f"{full_path} > {data}")
+        # Primitivos: string, number, bool
+        lines.append(f"{indent}{data}")
 
-    # Join all lines into a single string separated by newlines, filtering out any empty lines
-    result = "\n".join([line for line in lines if line.strip()])
-    logger.debug(result)
-    return result
+    return "\n".join([line for line in lines if line.strip()])  # eliminar líneas vacías
+
 
 
 

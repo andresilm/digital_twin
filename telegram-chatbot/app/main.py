@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "7796236199:AAEbKkM8UMP81JKgbXIXAIF4xgLxQ9QvDN8")
 
 RAG_SERVICE_URL = "http://rag-service:8082/query"
 WAIT_SECONDS = 7
@@ -32,15 +32,10 @@ async def send_wait_message(chat_id, context):
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """
-    Handles incoming Telegram messages, queries the RAG service,
-    and replies to the user. Sends a waiting message if response
-    takes longer than WAIT_SECONDS.
+    if update.message is None or update.message.text is None:
+        logger.warning("Received update without text message: %s", update)
+        return
 
-    Args:
-        update (Update): Incoming Telegram update with the message.
-        context: Bot context to interact with Telegram API.
-    """
     user_message = update.message.text
     chat_id = update.message.chat_id
 
@@ -50,13 +45,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         loop = asyncio.get_event_loop()
-        # Run HTTP request in a separate thread to avoid blocking event loop
         response = await loop.run_in_executor(
             None,
             lambda: requests.post(RAG_SERVICE_URL, json={"message": user_message}, timeout=30)
         )
 
-        wait_task.cancel()  # Cancel waiting message if response was fast
+        wait_task.cancel()
 
         data = response.json()
         final_answer = data.get("response", "Sorry, I don't have an answer.")
