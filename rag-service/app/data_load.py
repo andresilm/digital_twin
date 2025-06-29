@@ -42,15 +42,21 @@ def load_profile_from_json():
 
 def json_to_flat_text(data, indent_level=0) -> str:
     """
-    Convierte un JSON en texto plano, manteniendo el orden y estructura.
-    No intenta hacer prosa natural, pero conserva jerarquía.
+    Converts a nested JSON object into plain text while preserving its hierarchical structure.
+
+    Args:
+        data (dict or list): The JSON object to flatten.
+        indent_level (int): Current indentation level (used internally for recursion).
+
+    Returns:
+        str: A plain text representation of the JSON content.
     """
     lines = []
-    indent = "  " * indent_level  # dos espacios por nivel
+    indent = "  " * indent_level
 
     if isinstance(data, dict):
         for key, value in data.items():
-            # Convertimos la clave en título de sección si estamos en nivel alto
+
             if indent_level <= 1:
                 lines.append(f"{indent}{key.upper()}:")
             else:
@@ -58,7 +64,6 @@ def json_to_flat_text(data, indent_level=0) -> str:
             lines.append(json_to_flat_text(value, indent_level + 1))
     elif isinstance(data, list):
         for item in data:
-            # Prefijo tipo bullet solo para listas de strings o dicts simples
             prefix = "- " if isinstance(item, (str, dict)) else ""
             nested = json_to_flat_text(item, indent_level + 1)
             if isinstance(item, str):
@@ -66,10 +71,9 @@ def json_to_flat_text(data, indent_level=0) -> str:
             else:
                 lines.append(f"{indent}{prefix}{nested}")
     else:
-        # Primitivos: string, number, bool
         lines.append(f"{indent}{data}")
 
-    return "\n".join([line for line in lines if line.strip()])  # eliminar líneas vacías
+    return "\n".join([line for line in lines if line.strip()]) 
 
 
 

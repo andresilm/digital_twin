@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "7796236199:AAEbKkM8UMP81JKgbXIXAIF4xgLxQ9QvDN8")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
 
 RAG_SERVICE_URL = "http://rag-service:8082/query"
 WAIT_SECONDS = 7
