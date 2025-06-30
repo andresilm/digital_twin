@@ -85,9 +85,9 @@
       "fecha_egreso": "Agosto 2013"
     },
     "certificaciones": [
-      "Diplomatura en Ciencia de Datos y Aprendizaje Automático"
-    ],
-    "otros_estudios": []
+      {"titulo:": "Diplomatura en Ciencia de Datos y Aprendizaje Automático", "año": "2013"},
+      {"titulo:": "Oracle JAVA 8", "año": "2018"}
+    ]
   },
   "experiencia_laboral": [
     {

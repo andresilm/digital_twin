@@ -60,9 +60,8 @@ async def query_rag(input: UserInput):
     base_profile = app.state.base_profile
 
     docs = get_most_revelant_documents(vectordb, input.message)
-
-    logger.debug("Selected chunk with size %d: %s", len(docs[0].page_content), str(docs[0].page_content))
     context = "\n".join(doc.page_content for doc in docs) if docs else ""
+    logger.debug("Selected contex from %d chunk(s):\n%s", len(docs), context)
     response = requests.post("http://llm-service:8083/complete", json={
         "user_input": input.message,
         "base_profile": base_profile,

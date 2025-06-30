@@ -1,6 +1,6 @@
 from langchain.vectorstores import FAISS
 
-K_DOCS = 3
+K_DOCS = 2
 
 
 def create_index(docs_split, embeddings):
